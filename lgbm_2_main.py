@@ -111,7 +111,7 @@ test["month"] = test["month"].map(
 # 使用map方法对'subscribe'列进行编码
 train["subscribe"] = train["subscribe"].map({"no": 0, "yes": 1})
 x = 1
-print(x)
+print(1111)
 
 # 去掉训练集和测试集中的'id'列，保存测试集的id
 y_id = test["id"]
