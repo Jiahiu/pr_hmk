@@ -119,15 +119,15 @@ test.drop(["id"], axis=1, inplace=True)
 
 # 使用LightGBM进行模型训练
 model_lgb = lgb.LGBMClassifier(
-    num_leaves=2**5 - 1,
-    reg_alpha=0.25,
-    reg_lambda=0.25,
+    num_leaves=2**6,
+    reg_alpha=0.6,
+    reg_lambda=0.6,
     objective="binary",
     max_depth=-1,
-    learning_rate=0.0025,
+    learning_rate=0.0005,
     min_child_samples=3,
-    random_state=2022,
-    n_estimators=4000,
+    random_state=2024,
+    n_estimators=7700,
     subsample=1,
     colsample_bytree=1,
 )
@@ -142,18 +142,18 @@ y_pred = (y_pred_proba > 0.5).astype(int)
 # 计算准确率
 accuracy = accuracy_score(y_train, y_pred)
 print(accuracy)
-# 0.9286
-# # 在测试集上进行预测
-# y_pred = model_lgb.predict(test)
+# 1.0
+# 在测试集上进行预测
+y_pred = model_lgb.predict(test)
 
-# # 将预测结果映射回'yes'和'no'
-# result_map = {0: "no", 1: "yes"}
-# result = pd.DataFrame({"id": y_id, "subscribe": y_pred.astype(np.int32)})
-# result["subscribe"] = result["subscribe"].map(result_map)
+# 将预测结果映射回'yes'和'no'
+result_map = {0: "no", 1: "yes"}
+result = pd.DataFrame({"id": y_id, "subscribe": y_pred.astype(np.int32)})
+result["subscribe"] = result["subscribe"].map(result_map)
 
-# # 将结果保存为CSV文件
-# result.to_csv("predict1.csv", index=False)
+# 将结果保存为CSV文件
+result.to_csv("predict1.csv", index=False)
 
-# # 打印预测结果的数量统计
-# print("Prediction Counts:")
-# print(result["subscribe"].value_counts())
+# 打印预测结果的数量统计
+print("Prediction Counts:")
+print(result["subscribe"].value_counts())
