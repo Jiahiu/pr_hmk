@@ -110,8 +110,7 @@ test["month"] = test["month"].map(
 
 # 使用map方法对'subscribe'列进行编码
 train["subscribe"] = train["subscribe"].map({"no": 0, "yes": 1})
-x = 1
-print(1111)
+
 
 # 去掉训练集和测试集中的'id'列，保存测试集的id
 y_id = test["id"]
@@ -125,10 +124,10 @@ model_lgb = lgb.LGBMClassifier(
     reg_lambda=0.25,
     objective="binary",
     max_depth=-1,
-    learning_rate=0.005,
+    learning_rate=0.0025,
     min_child_samples=3,
     random_state=2022,
-    n_estimators=2000,
+    n_estimators=4000,
     subsample=1,
     colsample_bytree=1,
 )
@@ -143,6 +142,7 @@ y_pred = (y_pred_proba > 0.5).astype(int)
 # 计算准确率
 accuracy = accuracy_score(y_train, y_pred)
 print(accuracy)
+# 0.9286
 # # 在测试集上进行预测
 # y_pred = model_lgb.predict(test)
 
